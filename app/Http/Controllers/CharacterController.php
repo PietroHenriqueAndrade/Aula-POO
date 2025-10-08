@@ -67,18 +67,22 @@ class CharacterController extends Controller
         $character->hp = $request->session()->get('char_hp', $character->hp);
 
         // Ação do jogador
+        $lastAction = '';
         switch($request->action){
             case 'attack':
                 $damage = $character->attack($enemy);
                 $message .= "Você atacou o {$enemy->name} causando $damage de dano!<br>";
+                $lastAction = 'Atacar';
                 break;
             case 'special':
                 $damage = $character->specialAttack($enemy);
                 $message .= "Você usou ataque especial no {$enemy->name} causando $damage de dano!<br>";
+                $lastAction = 'Ataque Especial';
                 break;
             case 'heal':
                 $heal = $character->heal();
                 $message .= "Você se curou recuperando $heal de HP!<br>";
+                $lastAction = 'Curar';
                 break;
         }
 
@@ -132,7 +136,7 @@ class CharacterController extends Controller
             $request->session()->put('char_hp', $character->hp);
         }
 
-        return view('characters.play', compact('character', 'enemy', 'phase', 'message', 'gameOver', 'victory'));
+    return view('characters.play', compact('character', 'enemy', 'phase', 'message', 'gameOver', 'victory', 'lastAction'));
     }
 
     private function createEnemy($phase)

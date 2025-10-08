@@ -2,41 +2,65 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title>RPG - Jogar</title>
+    <title>Batalha RPG</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            background: #1a1a2e;
             color: white;
             text-align: center;
-            padding: 30px;
+            margin: 0;
+            padding: 50px;
+            /* Imagem de fundo com estilo épico */
+            background: url('https://i.pinimg.com/originals/29/28/7d/29287dbe2273424039448da43132f59b.gif') no-repeat center center fixed;
+            background-size: cover;
         }
-        h1 { font-size: 2.5em; margin-bottom: 20px; }
-        button {
-            margin: 10px;
-            padding: 12px 20px;
-            background: #16213e;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-        button:hover { background: #0f3460; }
+
+        /* Fundo translúcido nos painéis */
         .stats, .enemy-stats {
-            background: #16213e;
-            margin: 20px auto;
-            padding: 15px;
-            border-radius: 8px;
-            width: 300px;
-            text-align: left;
+            background: rgba(34, 42, 68, 0.9);
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 0 24px rgba(0, 0, 0, 0.6);
         }
-        .message { margin: 20px 0; font-weight: bold; }
+
+        h1 {
+            text-shadow: 2px 2px 8px #000;
+            font-size: 2.2em;
+        }
+
+        button {
+            background: linear-gradient(90deg, #4caf50, #2e7d32);
+            border: none;
+            color: white;
+            font-weight: bold;
+            padding: 12px 22px;
+            border-radius: 10px;
+            margin: 10px;
+            font-size: 1.1em;
+            cursor: pointer;
+            box-shadow: 0 0 12px #4caf50;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px #81c784;
+        }
+
+        .message {
+            background: rgba(0, 0, 0, 0.6);
+            padding: 12px;
+            border-radius: 8px;
+            width: fit-content;
+            margin: 0 auto;
+            font-size: 1.1em;
+            box-shadow: 0 0 8px #000;
+        }
     </style>
 </head>
 <body>
 
-    <h1>Fase {{ $phase ?? 1 }} - Batalha</h1>
+    <h1>Fase {{ $phase ?? 1 }} - Caverna do Dragão</h1>
 
     @if(isset($message))
         <p class="message">{!! $message !!}</p>
@@ -44,7 +68,7 @@
 
     <div style="display: flex; justify-content: center; align-items: flex-start; gap: 60px; margin-top: 40px;">
         <!-- Personagem -->
-        <div class="stats" style="background: #222a44; min-width: 320px; border-radius: 16px; box-shadow: 0 0 24px #28a745;">
+        <div class="stats" style="min-width: 320px; box-shadow: 0 0 24px #28a745;">
             <div style="text-align:center;">
                 @php
                     $avatarGifs = [
@@ -63,7 +87,11 @@
                         <span style="position:absolute; left:50%; top:2px; transform:translateX(-50%); color:#fff; font-weight:bold; font-size:1em; text-shadow:1px 1px 2px #000;">HP: {{ $character->hp }} / {{ $charMaxHp }}</span>
                     </div>
                 </div>
-                <div id="char-attack-info" style="margin-top:4px; color:#8bc34a; font-weight:bold; min-height:22px;"></div>
+                <div id="char-attack-info" style="margin-top:4px; color:#8bc34a; font-weight:bold; min-height:22px;">
+                    @if(isset($lastAction) && $lastAction)
+                        Última ação: {{ $lastAction }}
+                    @endif
+                </div>
             </div>
             <h2>{{ $character->name }} <span style="font-size:0.8em; color:#aaa;">(Você)</span></h2>
             <div style="font-size:1.1em;">
@@ -79,7 +107,7 @@
         <div style="font-size:2.5em; color:#28a745; align-self:center;">VS</div>
 
         <!-- Inimigo -->
-        <div class="enemy-stats" style="background: #442222; min-width: 320px; border-radius: 16px; box-shadow: 0 0 24px #c0392b;">
+        <div class="enemy-stats" style="min-width: 320px; background: rgba(68, 34, 34, 0.9); box-shadow: 0 0 24px #c0392b;">
             <div style="text-align:center;">
                 @php
                     $enemyMaxHp = session('enemy_max_hp', $enemy->hp);
@@ -138,7 +166,7 @@
     @endif
 
     <script>
-        // Bloqueia cliques rápidos em botões
+        // Evita spam de cliques
         document.addEventListener('DOMContentLoaded', () => {
             const buttons = document.querySelectorAll('button[name="action"]');
             buttons.forEach(btn => {
@@ -149,5 +177,6 @@
             });
         });
     </script>
+
 </body>
 </html>

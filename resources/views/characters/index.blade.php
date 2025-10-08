@@ -2,26 +2,39 @@
 <html>
 <head>
     <title>Personagens</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <style>
         body { 
-            font-family: Arial; 
-            /* Imagem de fundo */
-            background: url('https://i.pinimg.com/originals/04/73/a5/0473a57f7f5b9fea9dce6813615e28cd.gif') no-repeat center center fixed; 
+            font-family: 'Segoe UI', 'Arial', sans-serif; 
+            background: url('https://i.pinimg.com/originals/22/2b/85/222b8545bea5db87448c2618c5ec8c0b.gif') no-repeat center center fixed; 
             background-size: cover; 
             color: white; 
             text-align: center; 
             padding: 50px; 
         }
-        a { 
-            display:inline-block; 
-            margin:10px; 
-            padding:10px 15px; 
-            background:rgba(22, 33, 62, 0.8); 
-            color:white; 
-            border-radius:8px; 
-            text-decoration:none; 
+        .pixel-btn {
+            display: block;
+            margin: 24px auto 0 auto;
+            color: #fff;
+            font-size: 0.8rem;
+            text-decoration: none;
+            border-radius: 14px;
+            padding: 14px 36px;
+            background: linear-gradient(90deg,#00c6ff,#0072ff);
+            font-family: 'Press Start 2P', cursive;
+            font-weight: 600;
+            box-shadow: 0 2px 12px #00c6ff44;
+            text-align: center;
+            width: fit-content;
+            transition: background 0.2s, box-shadow 0.2s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
-        a:hover { background: rgba(15, 52, 96, 0.8); }
+        .pixel-btn:hover {
+            background: linear-gradient(90deg,#0072ff,#00c6ff);
+            box-shadow: 0 4px 24px #00c6ff77;
+            color: #fff;
+        }
         .character-item {
             background: rgba(22, 33, 62, 0.8);
             margin:20px auto;
@@ -59,8 +72,8 @@
     </style>
 </head>
 <body>
-    <h1>Personagens</h1>
-    <a href="{{ route('characters.create') }}">Criar Novo Personagem</a>
+    <h1 style="font-family: 'Press Start 2P', cursive; font-size:2.2rem; margin-bottom: 32px; letter-spacing:2px;">Personagens</h1>
+    <a href="{{ route('characters.create') }}" class="pixel-btn">Criar Novo Personagem</a>
     <ul style="list-style:none; padding:0;">
         @php
             $avatarGifs = [
@@ -80,8 +93,8 @@
                     <div class="character-attr">Ataque: <b>{{ $character->attack }}</b> | Defesa: <b>{{ $character->defense }}</b></div>
                     <div class="character-attr">Ataque Especial: <b>{{ $character->special_attack }}</b> | Defesa Especial: <b>{{ $character->special_defense }}</b></div>
                     <div class="character-attr">Velocidade: <b>{{ $character->speed }}</b></div>
-                    <div style="margin-top:10px;">
-                        <a href="{{ route('characters.play', $character->id) }}">Jogar</a>
+                    <div style="margin-top:18px;">
+                        <a href="{{ route('characters.play', $character->id) }}" class="pixel-btn" style="margin:0;">Jogar</a>
                     </div>
                 </div>
             </li>

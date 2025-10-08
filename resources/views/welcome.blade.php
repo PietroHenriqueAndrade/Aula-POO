@@ -51,7 +51,7 @@
     </style>
 </head>
 <body>
-    <h1>CARVERNA SOMBRIA</h1>
+    <h1>CAVERNA SOMBRIA</h1>
     <a href="{{ route('characters.create') }}">START GAME</a>
     <a href="{{ route('characters.index') }}">Escolher Personagem</a>
 </body>
