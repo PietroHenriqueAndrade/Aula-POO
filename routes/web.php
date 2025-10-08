@@ -1,17 +1,12 @@
 <?php
-
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CharacterController;
 
-// Tela inicial
 Route::get('/', function () {
-    return view('welcome'); // resources/views/welcome.blade.php
+    return view('welcome');
 })->name('home');
 
-// Personagem
-Route::get('/characters/create', [CharacterController::class, 'create'])->name('characters.create');
-Route::post('/characters/store', [CharacterController::class, 'store'])->name('characters.store');
-Route::get('/characters', [CharacterController::class, 'index'])->name('characters.index');
+Route::resource('characters', CharacterController::class)->except(['edit','update','destroy']);
 
-// Jogar
 Route::get('/game/{id}', [CharacterController::class, 'play'])->name('characters.play');
+Route::post('/game/{id}/action', [CharacterController::class, 'action'])->name('characters.action');

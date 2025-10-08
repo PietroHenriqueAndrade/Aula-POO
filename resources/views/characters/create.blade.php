@@ -1,88 +1,133 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
 <head>
+    <meta charset="UTF-8">
     <title>Criar Personagem</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #2c3e50;
-            color: #ecf0f1;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+        body { 
+            font-family: 'Arial', sans-serif; 
+            background: url('https://i.pinimg.com/originals/22/2b/85/222b8545bea5db87448c2618c5ec8c0b.gif') no-repeat center center fixed; 
+            background-size: cover; 
+            color: white; 
+            text-align: center; 
+            padding: 50px; 
         }
-        h1 {
-            color: #3498db;
-            border-bottom: 2px solid #3498db;
-            padding-bottom: 10px;
-        }
-        form {
-            background-color: #34495e;
-            padding: 20px;
-            border-radius: 8px;
-            width: 80%;
-            max-width: 400px;
-        }
-        label {
-            display: block;
-            margin-bottom: 5px;
-            color: #ecf0f1;
-        }
-        input {
-            width: calc(100% - 22px);
-            padding: 10px;
-            margin-bottom: 15px;
-            border-radius: 5px;
-            border: 1px solid #7f8c8d;
-            background-color: #2c3e50;
-            color: #ecf0f1;
-        }
-        button {
-            width: 100%;
-            padding: 10px;
-            border-radius: 5px;
-            border: none;
-            background-color: #2ecc71;
-            color: #fff;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-        button:hover {
-            background-color: #27ae60;
-        }
-        a {
-            color: #3498db;
-            text-decoration: none;
-            margin-top: 20px;
+
+        .form-container {
+            background: rgba(0, 0, 0, 0.7);
             display: inline-block;
+            padding: 30px;
+            border-radius: 10px;
+        }
+
+        h1 { 
+            font-size: 2.5em; 
+            margin-bottom: 20px; 
+        }
+
+        input, button, select { 
+            padding: 10px; 
+            margin: 10px 0; 
+            border-radius: 5px; 
+            border: none; 
+            font-size: 1em;
+        }
+
+        button { 
+            background: #28a745; 
+            color: white; 
+            cursor: pointer; 
+            transition: 0.3s;
+        }
+
+        button:hover { 
+            background: #218838; 
+        }
+
+        a { 
+            color: #f8f9fa; 
+            text-decoration: none; 
+            display: inline-block; 
+            margin-top: 15px; 
+        }
+
+        .characters {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 15px;
+        }
+
+        .characters label {
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .characters input {
+            display: none;
+        }
+
+        .characters img {
+            width: 100px;
+            height: 100px;
+            border: 3px solid transparent;
+            border-radius: 10px;
+        }
+
+        .characters input:checked + img {
+            border-color: #28a745;
+            transform: scale(1.1);
         }
     </style>
 </head>
 <body>
-    <h1>Criar Personagem</h1>
-    <form action="{{ route('characters.store') }}" method="POST">
-        @csrf
-        <label>Nome:</label>
-        <input type="text" name="name" required>
+    <div class="form-container" style="display: flex; align-items: flex-start; gap: 40px; justify-content: center;">
+        <div style="flex:1; min-width:320px;">
+            <h1>Criar Personagem</h1>
+            <form action="{{ route('characters.store') }}" method="POST">
+                @csrf
+                <input type="text" name="name" placeholder="Digite o nome" required><br>
+                <input type="number" name="hp" placeholder="Vida (HP)" min="10" max="500" required><br>
+                <input type="number" name="mp" placeholder="Mana (MP)" min="1" max="500" required><br>
+                <input type="number" name="attack" placeholder="Ataque" min="1" max="100" required><br>
+                <input type="number" name="defense" placeholder="Defesa" min="1" max="100" required><br>
+                <input type="number" name="special_attack" placeholder="Ataque Especial" min="1" max="100" required><br>
+                <input type="number" name="special_defense" placeholder="Defesa Especial" min="1" max="100" required><br>
+                <input type="number" name="speed" placeholder="Velocidade" min="1" max="100" required><br>
+                <input type="number" name="exp" placeholder="Experiência (EXP)" min="0" max="9999" value="0" required><br>
 
-        <label>Level:</label>
-        <input type="number" name="level" value="1">
+                <p>Escolha seu personagem:</p>
+                <div class="characters">
+                    <label>
+                        <input type="radio" name="avatar" value="guerreiro.png" data-gif="https://64.media.tumblr.com/638654cc72111ed14a8d1ca7c615f654/tumblr_pclhvhLxfk1xbwp7jo2_r1_400.gifv" required>
+                        <img src="https://64.media.tumblr.com/638654cc72111ed14a8d1ca7c615f654/tumblr_pclhvhLxfk1xbwp7jo2_r1_400.gifv" alt="Guerreiro">
+                    </label>
+                    <label>
+                        <input type="radio" name="avatar" value="arqueiro.png" data-gif="https://64.media.tumblr.com/350c7e11c02d7d8a64faaa365884db5a/tumblr_pclhvhLxfk1xbwp7jo1_r1_400.gif">
+                        <img src="https://64.media.tumblr.com/350c7e11c02d7d8a64faaa365884db5a/tumblr_pclhvhLxfk1xbwp7jo1_r1_400.gif" alt="Arqueiro">
+                    </label>
+                    <label>
+                        <input type="radio" name="avatar" value="mago.png" data-gif="https://64.media.tumblr.com/ff2ec7a3596e6aa2abca06a04827dcf3/tumblr_pclhvhLxfk1xbwp7jo4_r1_400.gifv">
+                        <img src="https://64.media.tumblr.com/ff2ec7a3596e6aa2abca06a04827dcf3/tumblr_pclhvhLxfk1xbwp7jo4_r1_400.gifv" alt="Mago">
+                    </label>
+                </div>
 
-        <label>HP:</label>
-        <input type="number" name="hp" value="20">
-
-        <label>MP:</label>
-        <input type="number" name="mp" value="15">
-
-        <label>Ataque:</label>
-        <input type="number" name="attack" value="10">
-
-        <label>Defesa:</label>
-        <input type="number" name="defense" value="10">
-
-        <button type="submit">Salvar</button>
-    </form>
-    <a href="{{ route('characters.index') }}">Voltar</a>
+                <button type="submit">Criar</button>
+            </form>
+            <a href="{{ route('characters.index') }}">Voltar para lista</a>
+        </div>
+        <div id="avatar-preview" style="flex:1; min-width:180px; display:flex; align-items:center; justify-content:center;">
+            <img id="avatar-gif" src="https://64.media.tumblr.com/638654cc72111ed14a8d1ca7c615f654/tumblr_pclhvhLxfk1xbwp7jo2_r1_400.gifv" alt="Avatar" style="width:180px; height:180px; border-radius:16px; box-shadow:0 0 24px #28a745; background:#222;">
+        </div>
+    </div>
+    <script>
+        // Troca o avatar animado ao lado do formulário conforme a escolha
+        document.querySelectorAll('input[name="avatar"]').forEach(function(radio) {
+            radio.addEventListener('change', function() {
+                var gif = this.getAttribute('data-gif');
+                document.getElementById('avatar-gif').src = gif;
+            });
+        });
+    </script>
 </body>
 </html>
